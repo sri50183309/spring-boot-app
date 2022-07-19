@@ -31,11 +31,11 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "My REST API",
-                "Some custom description of API.",
+                "XYZ Reservation Sytem",
+                "Contains API information on XYZ compay reservation system.",
                 "API TOS",
                 "Terms of service",
-                new Contact("John Doe", "www.example.com", "myeaddress@company.com"),
+                new Contact("Sriram", "www.example.com", "myeaddress@company.com"),
                 "License of API", "API license URL", Collections.emptyList());
     }
 
