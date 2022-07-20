@@ -1,34 +1,24 @@
-package com.sapient.xyz.bookingapp.theatre;
+package com.sapient.xyz.bookingapp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sapient.xyz.bookingapp.movies.MovieRunningInTheatre;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
-
 import java.util.List;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 @Entity
-@Table(name = "THEATRE")
+@Table(name = "MOVIES_RUNNING")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Theatre {
+public class Movie {
     //TODO: Try auto number
     @Id
-    @Column(name = "id")
     private Long id;
 
     @Column(nullable = false)
     private String name;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "theatre", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
     private List<MovieRunningInTheatre> movieRunningInTheatreList;
 
     public Long getId() {

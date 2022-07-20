@@ -2,10 +2,11 @@ package com.sapient.xyz.bookingapp.theatre;
 
 import com.sapient.xyz.bookingapp.domain.MoviesInTheatre;
 import com.sapient.xyz.bookingapp.domain.TheatreInfo;
-import com.sapient.xyz.bookingapp.movies.Movie;
-import com.sapient.xyz.bookingapp.movies.MovieRepository;
-import com.sapient.xyz.bookingapp.movies.MovieRunningInTheatre;
-import com.sapient.xyz.bookingapp.movies.MovingRunningInTheatreRepository;
+import com.sapient.xyz.bookingapp.model.Theatre;
+import com.sapient.xyz.bookingapp.repository.MovieRepository;
+import com.sapient.xyz.bookingapp.model.MovieRunningInTheatre;
+import com.sapient.xyz.bookingapp.repository.MovingRunningInTheatreRepository;
+import com.sapient.xyz.bookingapp.repository.TheatreRespository;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;

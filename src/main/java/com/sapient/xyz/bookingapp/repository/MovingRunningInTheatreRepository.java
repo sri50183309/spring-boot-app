@@ -1,6 +1,7 @@
-package com.sapient.xyz.bookingapp.movies;
+package com.sapient.xyz.bookingapp.repository;
 
-import com.sapient.xyz.bookingapp.theatre.Theatre;
+import com.sapient.xyz.bookingapp.model.MovieRunningInTheatre;
+import com.sapient.xyz.bookingapp.model.Theatre;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 

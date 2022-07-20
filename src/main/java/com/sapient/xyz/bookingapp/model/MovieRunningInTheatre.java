@@ -1,14 +1,10 @@
-package com.sapient.xyz.bookingapp.movies;
+package com.sapient.xyz.bookingapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sapient.xyz.bookingapp.movies.Movie;
-import com.sapient.xyz.bookingapp.theatre.Theatre;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
