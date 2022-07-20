@@ -41,7 +41,7 @@ public class TheatreService {
         theatreList = movieRunningInTheatre.stream()
                 .map(it -> new TheatreInfo(
                         it.getTheatre().getName(),
-                        it.getShows_times(),
+                        it.getShowTimes(),
                         it.getStart_date(),
                         it.getEnd_date(),
                         it.getMovie().getName()))
@@ -59,7 +59,7 @@ public class TheatreService {
         movieRunningInTheatre.setMovie(movieRepository.findByName(theatre.getMovieName()));
         movieRunningInTheatre.setEnd_date(theatre.getEnd_date());
         movieRunningInTheatre.setStart_date(theatre.getStart_date());
-        movieRunningInTheatre.setShows_times(theatre.getShows_times());
+        movieRunningInTheatre.setShowTimes(theatre.getShows_times());
         return movingRunningInTheatreRepository.save(movieRunningInTheatre);
     }
 }

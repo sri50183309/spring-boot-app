@@ -30,8 +30,8 @@ public class MovieRunningInTheatre {
     @JsonIgnoreProperties(value = {"movieRunningInTheatreList"})
     private Movie movie;
 
-   @Column(nullable = false)
-    private String shows_times;
+   @Column(name = "SHOWTIMES")
+    private String showTimes;
 
     @Column(nullable = false)
     private String start_date;
@@ -63,12 +63,12 @@ public class MovieRunningInTheatre {
         this.movie = movie;
     }
 
-    public String getShows_times() {
-        return shows_times;
+    public String getShowTimes() {
+        return showTimes;
     }
 
-    public void setShows_times(String shows_times) {
-        this.shows_times = shows_times;
+    public void setShowTimes(String showTimes) {
+        this.showTimes = showTimes;
     }
 
     public String getStart_date() {
