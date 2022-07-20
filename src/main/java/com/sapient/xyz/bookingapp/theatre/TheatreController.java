@@ -83,10 +83,12 @@ public class TheatreController {
         if(movieRunningInTheatre != null && movieRunningInTheatre.size() > 0){
             List<com.sapient.xyz.bookingapp.domain.Theatre> theatreList = new ArrayList<>();
             theatreList = movieRunningInTheatre.stream()
-                    .map(it -> it.getTheatre().getName())
+                    .map(it -> new com.sapient.xyz.bookingapp.domain.Theatre(
+                            it.getTheatre().getName(),
+                            it.getShows_times(),
+                            it.getStart_date(),
+                            it.getEnd_date()))
                     .distinct()
-                    .collect(Collectors.toList())
-                    .stream().map(it -> new com.sapient.xyz.bookingapp.domain.Theatre(it))
                     .collect(Collectors.toList());
             MoviesInTheatre moviesInTheatre = new MoviesInTheatre();
             moviesInTheatre.setTheatres(theatreList);

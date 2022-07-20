@@ -31,6 +31,15 @@ public class MovieRunningInTheatre {
     @JsonIgnoreProperties(value = {"movieRunningInTheatreList"})
     private Movie movie;
 
+   @Column(nullable = false)
+    private String shows_times;
+
+    @Column(nullable = false)
+    private String start_date;
+
+    @Column(nullable = false)
+    private String end_date;
+
     public Long getId() {
         return id;
     }
@@ -53,6 +62,30 @@ public class MovieRunningInTheatre {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    public String getShows_times() {
+        return shows_times;
+    }
+
+    public void setShows_times(String shows_times) {
+        this.shows_times = shows_times;
+    }
+
+    public String getStart_date() {
+        return start_date;
+    }
+
+    public void setStart_date(String start_date) {
+        this.start_date = start_date;
+    }
+
+    public String getEnd_date() {
+        return end_date;
+    }
+
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
     }
 }
 
