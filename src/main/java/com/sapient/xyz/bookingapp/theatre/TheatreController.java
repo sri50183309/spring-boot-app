@@ -27,13 +27,7 @@ import java.util.stream.Collectors;
 public class TheatreController {
 
     @Autowired
-    TheatreRespository theatreRespository;
-
-    @Autowired
-    MovingRunningInTheatreRepository movingRunningInTheatreRepository;
-
-    @Autowired
-    MovieRepository movieRepository;
+    TheatreService theatreService;
 
     @GetMapping(value = "/{theatreid}", produces = "application/json")
     @ApiOperation(value = "Find a theatre by id", notes = "Find Theatres")
@@ -48,7 +42,7 @@ public class TheatreController {
             }
     )
     public ResponseEntity<Theatre> list (@PathVariable("theatreid") @Valid @ApiParam(required = true, example = "1" , allowableValues = "range[0,999999]")   int theatreId) {
-        Optional<Theatre> theatre = theatreRespository.findById(new Long(theatreId));
+        Optional<Theatre> theatre = theatreService.findById(new Long(theatreId));
         if(theatre.isPresent())
             return new ResponseEntity<>(theatre.get(), HttpStatus.OK);
         else
@@ -68,7 +62,7 @@ public class TheatreController {
             }
     )
     public ResponseEntity<Theatre> create (@RequestBody  Theatre theatre) {
-        theatreRespository.save(theatre);
+        theatreService.save(theatre);
         return new ResponseEntity<>(theatre, HttpStatus.OK);
     }
 
@@ -85,24 +79,8 @@ public class TheatreController {
             }
     )
     public ResponseEntity<MoviesInTheatre> findTheatreByRunningMovie (@PathVariable("movieName") @Valid @ApiParam(required = true, example = "RRR" )   String movieName) {
-
-        List<MovieRunningInTheatre> movieRunningInTheatre = movingRunningInTheatreRepository.findTheatreByMovieName(movieName);
-        if(movieRunningInTheatre != null && movieRunningInTheatre.size() > 0){
-            List<TheatreInfo> theatreList = new ArrayList<>();
-            theatreList = movieRunningInTheatre.stream()
-                    .map(it -> new TheatreInfo(
-                            it.getTheatre().getName(),
-                            it.getShows_times(),
-                            it.getStart_date(),
-                            it.getEnd_date(),
-                            it.getMovie().getName()))
-                    .distinct()
-                    .collect(Collectors.toList());
-            MoviesInTheatre moviesInTheatre = new MoviesInTheatre();
-            moviesInTheatre.setTheatres(theatreList);
-            return new ResponseEntity<>(moviesInTheatre, HttpStatus.OK);
-        }else
-            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        MoviesInTheatre moviesInTheatre = theatreService.findTheatreByMovieName(movieName);
+        return new ResponseEntity<>(moviesInTheatre, HttpStatus.OK);
     }
 
     @PostMapping(value = "/theatreShowingMovie", produces = "application/json")
@@ -118,14 +96,7 @@ public class TheatreController {
             }
     )
     public ResponseEntity<MovieRunningInTheatre> createShowForTheatre(@RequestBody TheatreInfo theatre) {
-        //theatreRespository.save(theatre);
-        MovieRunningInTheatre movieRunningInTheatre = new MovieRunningInTheatre();
-        movieRunningInTheatre.setTheatre(theatreRespository.findByName(theatre.getName()));
-        movieRunningInTheatre.setMovie(movieRepository.findByName(theatre.getMovieName()));
-        movieRunningInTheatre.setEnd_date(theatre.getEnd_date());
-        movieRunningInTheatre.setStart_date(theatre.getStart_date());
-        movieRunningInTheatre.setShows_times(theatre.getShows_times());
-        MovieRunningInTheatre movieRunningInTheatre1 = movingRunningInTheatreRepository.save(movieRunningInTheatre);
+        MovieRunningInTheatre movieRunningInTheatre1 = theatreService.saveTheatreMovieInfo(theatre);
         return new ResponseEntity<>(movieRunningInTheatre1, HttpStatus.OK);
     }
 }
