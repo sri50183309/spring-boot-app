@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "MOVIES_RUNNING_IN_THEATRE")
 @NoArgsConstructor
@@ -17,6 +19,7 @@ import java.util.List;
 public class MovieRunningInTheatre {
     //TODO: Try auto number
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
     private Long id;
 

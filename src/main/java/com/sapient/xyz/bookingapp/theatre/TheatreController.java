@@ -1,6 +1,9 @@
 package com.sapient.xyz.bookingapp.theatre;
 
 import com.sapient.xyz.bookingapp.domain.MoviesInTheatre;
+import com.sapient.xyz.bookingapp.domain.TheatreInfo;
+import com.sapient.xyz.bookingapp.movies.Movie;
+import com.sapient.xyz.bookingapp.movies.MovieRepository;
 import com.sapient.xyz.bookingapp.movies.MovieRunningInTheatre;
 import com.sapient.xyz.bookingapp.movies.MovingRunningInTheatreRepository;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +30,9 @@ public class TheatreController {
 
     @Autowired
     MovingRunningInTheatreRepository movingRunningInTheatreRepository;
+
+    @Autowired
+    MovieRepository movieRepository;
 
     @GetMapping(value = "/{theatreid}", produces = "application/json")
     @ApiOperation(value = "Find a theatre by id", notes = "Find Theatres")
@@ -65,7 +71,7 @@ public class TheatreController {
         return new ResponseEntity<>(theatre, HttpStatus.OK);
     }
 
-        @GetMapping(value = "/findByMoviesRnning/{movieName}", produces = "application/json")
+    @GetMapping(value = "/theatreShowingMovie/{movieName}", produces = "application/json")
     @ApiOperation(value = "Find a theatre by movie running", notes = "Find Theatres for a movie")
     @ApiResponses(
             value = {
@@ -81,13 +87,14 @@ public class TheatreController {
 
         List<MovieRunningInTheatre> movieRunningInTheatre = movingRunningInTheatreRepository.findTheatreByMovieName(movieName);
         if(movieRunningInTheatre != null && movieRunningInTheatre.size() > 0){
-            List<com.sapient.xyz.bookingapp.domain.Theatre> theatreList = new ArrayList<>();
+            List<TheatreInfo> theatreList = new ArrayList<>();
             theatreList = movieRunningInTheatre.stream()
-                    .map(it -> new com.sapient.xyz.bookingapp.domain.Theatre(
+                    .map(it -> new TheatreInfo(
                             it.getTheatre().getName(),
                             it.getShows_times(),
                             it.getStart_date(),
-                            it.getEnd_date()))
+                            it.getEnd_date(),
+                            it.getMovie().getName()))
                     .distinct()
                     .collect(Collectors.toList());
             MoviesInTheatre moviesInTheatre = new MoviesInTheatre();
@@ -95,5 +102,29 @@ public class TheatreController {
             return new ResponseEntity<>(moviesInTheatre, HttpStatus.OK);
         }else
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+    }
+
+    @PostMapping(value = "/theatreShowingMovie", produces = "application/json")
+    @ApiOperation(value = "Creates a theatre", notes = "Add new theatre")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 200, message = "Success", response = Theatre.class),
+                    @ApiResponse(code = 400, message = "Success", response = Theatre.class),
+                    @ApiResponse(code = 401, message = "Success", response = Theatre.class),
+                    @ApiResponse(code = 404, message = "Success", response = Theatre.class),
+                    @ApiResponse(code = 500, message = "Success", response = Theatre.class),
+                    @ApiResponse(code = 0, message = "Success", response = Theatre.class)
+            }
+    )
+    public ResponseEntity<MovieRunningInTheatre> createShowForTheatre(@RequestBody TheatreInfo theatre) {
+        //theatreRespository.save(theatre);
+        MovieRunningInTheatre movieRunningInTheatre = new MovieRunningInTheatre();
+        movieRunningInTheatre.setTheatre(theatreRespository.findByName(theatre.getName()));
+        movieRunningInTheatre.setMovie(movieRepository.findByName(theatre.getMovieName()));
+        movieRunningInTheatre.setEnd_date(theatre.getEnd_date());
+        movieRunningInTheatre.setStart_date(theatre.getStart_date());
+        movieRunningInTheatre.setShows_times(theatre.getShows_times());
+        MovieRunningInTheatre movieRunningInTheatre1 = movingRunningInTheatreRepository.save(movieRunningInTheatre);
+        return new ResponseEntity<>(movieRunningInTheatre1, HttpStatus.OK);
     }
 }

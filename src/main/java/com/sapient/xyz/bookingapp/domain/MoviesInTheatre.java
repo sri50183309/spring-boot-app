@@ -10,5 +10,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MoviesInTheatre {
-    private List<Theatre> theatres;
+    private List<TheatreInfo> theatres;
 }
