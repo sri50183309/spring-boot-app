@@ -11,8 +11,9 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Theatre {
+public class TheatreInfo {
     String name;
+    String movieName;
     private String shows_times;
     private String start_date;
     private String end_date;
