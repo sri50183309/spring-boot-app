@@ -70,12 +70,12 @@ public class TheatreController {
     @ApiOperation(value = "Find a theatre by movie running", notes = "Find Theatres for a movie")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 200, message = "Success", response = Theatre.class),
-                    @ApiResponse(code = 400, message = "Success", response = Theatre.class),
-                    @ApiResponse(code = 401, message = "Success", response = Theatre.class),
-                    @ApiResponse(code = 404, message = "Success", response = Theatre.class),
-                    @ApiResponse(code = 500, message = "Success", response = Theatre.class),
-                    @ApiResponse(code = 0, message = "Success", response = Theatre.class)
+                    @ApiResponse(code = 200, message = "Success", response = MoviesInTheatre.class),
+                    @ApiResponse(code = 400, message = "Success", response = MoviesInTheatre.class),
+                    @ApiResponse(code = 401, message = "Success", response = MoviesInTheatre.class),
+                    @ApiResponse(code = 404, message = "Success", response = MoviesInTheatre.class),
+                    @ApiResponse(code = 500, message = "Success", response = MoviesInTheatre.class),
+                    @ApiResponse(code = 0, message = "Success", response = MoviesInTheatre.class)
             }
     )
     public ResponseEntity<MoviesInTheatre> findTheatreByRunningMovie (@PathVariable("movieName") @Valid @ApiParam(required = true, example = "RRR" )   String movieName) {
@@ -84,15 +84,15 @@ public class TheatreController {
     }
 
     @PostMapping(value = "/theatreShowingMovie", produces = "application/json")
-    @ApiOperation(value = "Creates a theatre", notes = "Add new theatre")
+    @ApiOperation(value = "Add movie show to a theatre", notes = "Add new movie show")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 200, message = "Success", response = Theatre.class),
-                    @ApiResponse(code = 400, message = "Success", response = Theatre.class),
-                    @ApiResponse(code = 401, message = "Success", response = Theatre.class),
-                    @ApiResponse(code = 404, message = "Success", response = Theatre.class),
-                    @ApiResponse(code = 500, message = "Success", response = Theatre.class),
-                    @ApiResponse(code = 0, message = "Success", response = Theatre.class)
+                    @ApiResponse(code = 200, message = "Success", response = MovieRunningInTheatre.class),
+                    @ApiResponse(code = 400, message = "Success", response = MovieRunningInTheatre.class),
+                    @ApiResponse(code = 401, message = "Success", response = MovieRunningInTheatre.class),
+                    @ApiResponse(code = 404, message = "Success", response = MovieRunningInTheatre.class),
+                    @ApiResponse(code = 500, message = "Success", response = MovieRunningInTheatre.class),
+                    @ApiResponse(code = 0, message = "Success", response = MovieRunningInTheatre.class)
             }
     )
     public ResponseEntity<MovieRunningInTheatre> createShowForTheatre(@RequestBody TheatreInfo theatre) {
